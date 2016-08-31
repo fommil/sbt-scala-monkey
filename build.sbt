@@ -10,5 +10,8 @@ scalacOptions in Compile ++= Seq(
 )
 
 ScriptedPlugin.scriptedSettings
-scriptedLaunchOpts += "-Dplugin.version=" + version.value
+scriptedLaunchOpts ++= Seq(
+  "-XX:MaxPermSize=256m", "-Xss2m", "-Xmx512m",
+  "-Dplugin.version=" + version.value
+)
 scriptedBufferLog := false
