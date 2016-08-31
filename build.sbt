@@ -8,3 +8,7 @@ scalacOptions in Compile ++= Seq(
   "-Xfatal-warnings",
   "-language:postfixOps", "-language:implicitConversions"
 )
+
+ScriptedPlugin.scriptedSettings
+scriptedLaunchOpts += "-Dplugin.version=" + version.value
+scriptedBufferLog := false
