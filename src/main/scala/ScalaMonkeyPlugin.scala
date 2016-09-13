@@ -9,7 +9,7 @@ import Keys._
  */
 object ScalaMonkeyPlugin extends AutoPlugin {
   object Keys {
-    val scalaMonkeyJar = TaskKey[Option[File]]("Jar or classdirectory containing monkey patches to scala-compiler or scala-library.")
+    val scalaMonkeyJar = TaskKey[File]("Jar or classdirectory containing monkey patches to scala-compiler or scala-library.")
   }
   import Keys._
 
@@ -18,8 +18,7 @@ object ScalaMonkeyPlugin extends AutoPlugin {
   val autoImport = Keys
 
   override lazy val projectSettings = Seq(
-    scalaInstance <<= scalaInstanceTask,
-    scalaMonkeyJar := None
+    scalaInstance <<= scalaInstanceTask
   )
 
   // copied from sbt/main/src/main/scala/sbt/Defaults.scala
@@ -58,7 +57,7 @@ object ScalaMonkeyPlugin extends AutoPlugin {
     new ScalaInstance(
       scalaVersion.value,
       // monkeys first...
-      makeClassLoader(state.value)(scalaMonkeyJar.value.toList ::: libraryJar :: compilerJar :: otherJars.toList),
+      makeClassLoader(state.value)(scalaMonkeyJar.?.value.toList ::: libraryJar :: compilerJar :: otherJars.toList),
       libraryJar,
       compilerJar,
       otherJars,
